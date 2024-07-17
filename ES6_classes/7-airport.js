@@ -1,3 +1,4 @@
+/* eslint-disable */
 export default class Airport {
   constructor(name, code) {
     this._name = name;
@@ -21,6 +22,6 @@ export default class Airport {
   }
 
   toString() {
-    return `[${this._code}]`;
+    return `[object ${this._code}]`;
   }
 }
