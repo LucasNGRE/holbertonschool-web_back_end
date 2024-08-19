@@ -6,6 +6,7 @@ import asyncio
 import random
 from typing import Generator
 
+
 async def async_generator():
     '''async generator'''
     for _ in range(10):
