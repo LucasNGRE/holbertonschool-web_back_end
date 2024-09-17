@@ -56,4 +56,4 @@ function countStudents(fileName) {
   });
 }
 
-module.exports = countStudents; // Export the countStudents function for use in other modules
+module.exports = { countStudents }; // Export the countStudents function for use in other modules
