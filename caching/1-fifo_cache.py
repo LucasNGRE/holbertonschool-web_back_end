@@ -32,7 +32,8 @@ class FIFOCache(BaseCaching):
                     del self.cache_data[oldest_key]
                     print(f"DISCARD: {oldest_key}")
             else:
-                # If key already exists, remove it to re-add at the end of the queue
+                # If key already exists, remove it to re-add at
+                # the end of the queue
                 self.queue.remove(key)
 
             self.cache_data[key] = item
