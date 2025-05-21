@@ -2,9 +2,15 @@
 """The function should use a regex to replace occurrences of
 certain field values."""
 import re
+from typing import List
 
 
-def filter_datum(fields, redaction, message, separator):
+def filter_datum(
+    fields: List[str],
+    redaction: str,
+    message: str,
+    separator: str
+) -> str:
 
     """filter_datum should be less than 5 lines long and use re.sub
     to perform the substitution with a single regex.
