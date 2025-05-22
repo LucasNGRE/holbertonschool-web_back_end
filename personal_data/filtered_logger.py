@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""The function should use a regex to replace occurrences of
-certain field values."""
+"""Module for filtering sensitive data from log messages."""
+
+import logging
 import re
 from typing import List
 
@@ -11,9 +12,7 @@ def filter_datum(
     message: str,
     separator: str
 ) -> str:
-
-    """filter_datum should be less than 5 lines long and use re.sub
-    to perform the substitution with a single regex.
+    """Redacts specified fields in a log message.
 
     Args:
         fields (list): List of field names to be redacted.
@@ -24,18 +23,13 @@ def filter_datum(
     Returns:
         str: The filtered log line with the field values redacted.
     """
-
     pattern = r'({})=([^{}]*)'.format('|'.join(fields), separator)
     return re.sub(pattern, lambda m: f"{m.group(1)}={redaction}", message)
 
-"""Redacting Formatter class for filtering PII from log messages."""
-import logging
-from typing import List
-from filtered_logger import filter_datum  # Assure-toi que filter_datum est dans ce fichier ou importé correctement
-
 
 class RedactingFormatter(logging.Formatter):
-    """Redacting Formatter class that obfuscates specified fields in log messages."""
+    """Redacting Formatter class that obfuscates specified
+    fields in log messages."""
 
     REDACTION = "***"
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
@@ -60,4 +54,9 @@ class RedactingFormatter(logging.Formatter):
             str: The formatted log record with redacted fields.
         """
         original_message = super().format(record)
-        return filter_datum(self.fields, self.REDACTION, original_message, self.SEPARATOR)
+        return filter_datum(
+            self.fields,
+            self.REDACTION,
+            original_message,
+            self.SEPARATOR
+        )
