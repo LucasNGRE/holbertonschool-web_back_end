@@ -4,6 +4,8 @@
 import logging
 import re
 from typing import List
+import mysql.connector
+from os import getenv
 
 
 def filter_datum(
@@ -85,9 +87,6 @@ PII_FIELDS = (
     "password",
 )
 
-
-import mysql.connector
-from os import getenv
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
     """Returns a connector to the MySQL database."""
