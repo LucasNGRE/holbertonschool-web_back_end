@@ -84,3 +84,16 @@ PII_FIELDS = (
     "ssn",
     "password",
 )
+
+
+import mysql.connector
+from os import getenv
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """Returns a connector to the MySQL database."""
+    return mysql.connector.connect(
+        host=getenv("PERSONAL_DATA_DB_HOST", "localhost"),
+        database=getenv("PERSONAL_DATA_DB_NAME", "personal_data"),
+        user=getenv("PERSONAL_DATA_DB_USERNAME", "root"),
+        password=getenv("PERSONAL_DATA_DB_PASSWORD", ""),
+    )
