@@ -60,3 +60,27 @@ class RedactingFormatter(logging.Formatter):
             original_message,
             self.SEPARATOR
         )
+
+
+def get_logger() -> logging.Logger:
+    """Creates a logger with the RedactingFormatter.
+
+    Returns:
+        logging.Logger: The configured logger.
+    """
+    logger = logging.getLogger("user_data")
+    logger.setLevel(logging.INFO)
+    handler = logging.StreamHandler()
+    handler.setFormatter(RedactingFormatter(fields=PII_FIELDS))
+    logger.addHandler(handler)
+    logger.propagate = False
+    return logger
+
+
+PII_FIELDS = (
+    "name",
+    "email",
+    "phone",
+    "ssn",
+    "password",
+)
