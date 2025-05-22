@@ -96,3 +96,30 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         user=getenv("PERSONAL_DATA_DB_USERNAME", "root"),
         password=getenv("PERSONAL_DATA_DB_PASSWORD", ""),
     )
+
+
+def main():
+    """main function that takes no arguments and returns nothing."""
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users;")
+    rows = cursor.fetchall()
+    logger = get_logger()
+
+    for row in rows:
+        name, email, phone, ssn, password, ip, last_login, user_agent = row
+
+        log_message = (
+            f"name={name}; email={email}; phone={phone}; ssn={ssn}; "
+            f"password={password}; ip={ip}; last_login={last_login}; "
+            f"user_agent={user_agent};"
+        )
+
+        logger.info(log_message)
+
+    cursor.close()
+    db.close()
+
+
+if __name__ == "__main__":
+    main()
