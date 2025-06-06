@@ -53,6 +53,13 @@ class BasicAuth(Auth):
         self,
         decoded_base64_authorization_header: str
     ) -> (str, str):
+        """
+        Extracts user credentials from the decoded Base64 authorization header.
+        Arguments:
+        decoded_base64_authorization_header -- the decoded Base64 header
+        Returns:
+        A tuple containing the username and password or (None, None) if extraction fails
+        """
         if decoded_base64_authorization_header is None:
             return None, None
         if not isinstance(decoded_base64_authorization_header, str):
