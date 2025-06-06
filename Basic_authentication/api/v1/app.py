@@ -18,7 +18,7 @@ CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 # Initialize auth
 auth = None
 auth_type = getenv("AUTH_TYPE", "auth")
-if auth_type == "auth": 
+if auth_type == "auth":
     auth = Auth()
 
 
@@ -29,7 +29,8 @@ def before_request():
     if auth is None:
         return
     # Public endpoints that do not require authentication
-    excluded_paths = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
+    excluded_paths = ['/api/v1/status/', '/api/v1/unauthorized/',
+                      '/api/v1/forbidden/']
     # Check if the request path requires authentication
     if not auth.require_auth(request.path, excluded_paths):
         return
