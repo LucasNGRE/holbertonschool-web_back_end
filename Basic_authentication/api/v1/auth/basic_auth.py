@@ -58,7 +58,8 @@ class BasicAuth(Auth):
         Arguments:
         decoded_base64_authorization_header -- the decoded Base64 header
         Returns:
-        A tuple containing the username and password or (None, None) if extraction fails
+        A tuple containing the username and password or (None, None)
+        if extraction fails
         """
         if decoded_base64_authorization_header is None:
             return None, None
