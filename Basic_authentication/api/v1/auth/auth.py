@@ -20,7 +20,16 @@ class Auth:
         Returns:
         False for now (will be implemented later)
         """
-        return False
+        if path is None or excluded_paths is None or len(excluded_paths) == 0:
+            return True
+        # Normalize path to ensure it ends with a slash
+        normalized_path = path if path.endswith('/') else path + '/'
+
+        for excluded in excluded_paths:
+            if excluded == normalized_path:
+                return False
+
+        return True
 
     def authorization_header(self, request=None) -> str:
         """
