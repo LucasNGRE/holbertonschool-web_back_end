@@ -5,6 +5,7 @@ Auth module - template for future authentication systems.
 
 from flask import request
 from typing import List, TypeVar
+import os
 
 
 class Auth:
@@ -58,3 +59,18 @@ class Auth:
         None for now (will be implemented later)
         """
         return None
+
+    def session_cookie(self, request=None):
+        """
+        Retrieves the session cookie from the request.
+
+        Arguments:
+        request -- the Flask request object
+
+        Returns:
+         returns a cookie value from a request
+        """
+        if request is None:
+            return None
+        cookie_name = os.getenv('SESSION_NAME')
+        return request.cookies.get(cookie_name, None) if cookie_name else None
