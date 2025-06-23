@@ -35,26 +35,29 @@ def before_request():
     """
     if auth is None:
         return
-    # Public endpoints that do not require authentication
-    excluded_paths = ['/api/v1/status/', '/api/v1/unauthorized/',
-                      '/api/v1/forbidden/', '/api/v1/auth_session/login/']
-    # Check if the request path requires authentication
+
+    excluded_paths = [
+        '/api/v1/status/',
+        '/api/v1/unauthorized/',
+        '/api/v1/forbidden/',
+        '/api/v1/auth_session/login/'  # <- ajout requis
+    ]
+
+    # Si le chemin est exclu, pas besoin d’auth
     if not auth.require_auth(request.path, excluded_paths):
         return
 
-    if auth.authorization_header(request) is None:
-        abort(401)
-
-    if auth.current_user(request) is None:
-        abort(403)
-    
+    # Vérifie qu'au moins un moyen d'authentification est présent
     if auth.authorization_header(request) is None and \
        auth.session_cookie(request) is None:
         abort(401)
 
+    # Tente de récupérer l'utilisateur
     user = auth.current_user(request)
     if user is None:
         abort(403)
+
+    # Attribue l'utilisateur courant à la requête
     request.current_user = user
 
 
