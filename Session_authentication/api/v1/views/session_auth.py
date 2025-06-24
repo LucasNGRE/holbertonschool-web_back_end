@@ -46,16 +46,13 @@ def session_auth_login() -> str:
     '/auth_session/logout', methods=['DELETE'], strict_slashes=False
 )
 def session_auth_logout() -> str:
+    """Handles user logout for session authentication.
+
+    Returns:
+            str: JSON response indicating successful logout.
     """
-    DELETE /api/v1/auth_session/logout
-    Logout by destroying the session using the session cookie.
-    """
+    from api.v1.app import auth
     if not auth.destroy_session(request):
         abort(404)
 
-    response = jsonify({})
-    cookie_name = os.getenv("SESSION_NAME")
-    if cookie_name:
-        response.set_cookie(cookie_name, "", expires=0)
-
-    return response
+    return jsonify({}), 200
