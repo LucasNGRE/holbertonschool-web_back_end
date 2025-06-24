@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" View that handles all routes for the Session authentication.
+"""This module defines views for handling session authentication routes using Flask.
 """
 from flask import jsonify, request, abort
 from api.v1.views import app_views
@@ -11,8 +11,8 @@ import os
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
 def session_auth_login() -> str:
     """
-    POST /api/v1/auth_session/login
-    Handles user login and session creation.
+    Handles user login and session creation for session authentication.
+    Returns a JSON response with user data and sets a session cookie.
     """
     email = request.form.get('email')
     password = request.form.get('password')
@@ -47,8 +47,8 @@ def session_auth_login() -> str:
 )
 def session_auth_logout() -> str:
     """
-    DELETE /api/v1/auth_session/logout
-    Logout by destroying the session using the session cookie.
+    Handles user logout by destroying the session using the session cookie.
+    Returns an empty JSON response and clears the session cookie.
     """
     if not auth.destroy_session(request):
         abort(404)
