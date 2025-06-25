@@ -42,14 +42,14 @@ class DB:
         return new_user
 
     def find_user_by(self, **kwargs):
-        """Find a user by given attributes
-        """
+        """Find a user by given attributes"""
+        if not kwargs:
+            raise InvalidRequestError("No arguments provided")
+
         try:
-            if not kwargs:
-                raise InvalidRequestError("No arguments provided")
             user = self._session.query(User).filter_by(**kwargs).one()
             return user
         except NoResultFound:
-            return None
+            raise
         except InvalidRequestError:
-            raise ValueError("Invalid request arguments")
+            raise
