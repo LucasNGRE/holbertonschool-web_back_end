@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """App module
 """
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, redirect
 from auth import Auth
 import bcrypt
 from user import User
@@ -49,19 +49,15 @@ def login():
     return response
 
 
-@app.route('/sessions', methods=['DELETE'])
+@app.route("/sessions", methods=["DELETE"])
 def logout():
-    """Logs user out by destroying the session."""
-    session_id = request.cookies.get('session_id')
-    if not session_id:
-        abort(403)
-
+    """Logout route. Destroys a session if valid, else 403."""
+    session_id = request.cookies.get("session_id")
     user = AUTH.get_user_from_session_id(session_id)
-    if not user:
+    if user is None:
         abort(403)
-
     AUTH.destroy_session(user.id)
-    return jsonify({"message": "logged out"}), 200
+    return redirect("/", 302)
 
 
 if __name__ == '__main__':
