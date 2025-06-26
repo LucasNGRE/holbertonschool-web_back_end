@@ -3,6 +3,9 @@
 """
 from flask import Flask, jsonify, request
 from auth import Auth
+import bcrypt
+from user import User
+from db import DB
 
 
 app = Flask(__name__)
