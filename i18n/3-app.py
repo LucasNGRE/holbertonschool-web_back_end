@@ -7,7 +7,7 @@ locale, and timezone.
 """
 
 from flask import Flask, render_template, request
-from flask_babel import Babel, gettext as _babel_gettext
+from flask_babel import Babel
 
 app = Flask(__name__)
 
@@ -26,7 +26,8 @@ babel = Babel()
 
 def _(string):
     """Translate string using gettext (alias)."""
-    return _babel_gettext(string)
+    from flask_babel import gettext
+    return gettext(string)
 
 
 def get_locale():
