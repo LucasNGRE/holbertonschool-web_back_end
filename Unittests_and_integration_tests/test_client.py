@@ -100,12 +100,13 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         Set up the class by patching requests.get and mocking its behavior.
         """
         cls.get_patcher = patch(
-            "client.requests.get",
-            **{"return_value.json.side_effect": [
-                cls.org_payload, cls.repos_payload,
-                cls.org_payload, cls.repos_payload
-            ]}
-        )
+        "requests.get",
+        **{"return_value.json.side_effect": [
+            cls.org_payload, cls.repos_payload,
+            cls.org_payload, cls.repos_payload
+        ]}
+    )
+
 
         # Start the patcher
         cls.mock_get = cls.get_patcher.start()
