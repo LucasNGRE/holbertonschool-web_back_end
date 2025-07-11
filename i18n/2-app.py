@@ -2,7 +2,8 @@
 """Flask app for i18n.
 
 This module sets up a Flask application with Babel for internationalization.
-It includes configuration for supported languages, default locale, and timezone.
+It includes configuration for supported languages, default
+locale, and timezone.
 """
 
 from flask import Flask, render_template, request
@@ -13,6 +14,8 @@ app = Flask(__name__)
 
 
 class Config:
+    """Configuration class for Flask app.
+    """
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = "en"
     BABEL_DEFAULT_TIMEZONE = "UTC"
