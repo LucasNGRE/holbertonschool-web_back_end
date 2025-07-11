@@ -9,6 +9,10 @@ app = Flask(__name__)
 
 
 class Config:
+    """Configuration class for Flask app.
+
+    Defines available languages, default locale, and default timezone.
+    """
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = "en"
     BABEL_DEFAULT_TIMEZONE = "UTC"
