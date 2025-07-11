@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+"""Flask app for i18n.
+
+This module sets up a Flask application with Babel for internationalization.
+It includes configuration for supported languages, default locale, and timezone.
+"""
+
 from flask import Flask, render_template, request
 
 from flask_babel import Babel
