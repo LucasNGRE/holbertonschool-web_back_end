@@ -7,15 +7,13 @@ locale, and timezone.
 """
 
 from flask import Flask, render_template, request
-
-from flask_babel import Babel, _
+from flask_babel import Babel, gettext as _babel_gettext
 
 app = Flask(__name__)
 
 
 class Config:
-    """Configuration class for Flask app.
-    """
+    """Configuration class for Flask app."""
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = "en"
     BABEL_DEFAULT_TIMEZONE = "UTC"
@@ -23,15 +21,17 @@ class Config:
 
 app.config.from_object(Config)
 
-
 babel = Babel()
+
+
+def _(string):
+    """Translate string using gettext (alias)."""
+    return _babel_gettext(string)
 
 
 def get_locale():
     """Determine the best match for supported languages."""
-    return request.accept_languages.best_match(
-        app.config['LANGUAGES']
-    )
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
 babel.init_app(app, locale_selector=get_locale)
