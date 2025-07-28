@@ -29,7 +29,27 @@ def call_history(method: Callable) -> Callable:
         self._redis.rpush(output_key, output)
         return output
     return wrapper
-    
+
+def replay(method: Callable) -> None:
+    """Display the history of calls of a particular function."""
+    redis_client = method.__self__._redis  # accès à Redis via l'instance (self) de la méthode
+    key = method.__qualname__
+
+    # Récupère le nombre d'appels
+    count = redis_client.get(key)
+    if count is None:
+        print(f"{key} was never called.")
+        return
+
+    print(f"{key} was called {int(count)} times:")
+
+    inputs = redis_client.lrange(f"{key}:inputs", 0, -1)
+    outputs = redis_client.lrange(f"{key}:outputs", 0, -1)
+
+    for inp, outp in zip(inputs, outputs):
+        # inp et outp sont des bytes, on peut les décoder ou afficher tels quels selon ton stockage
+        print(f"{key}(*{inp.decode('utf-8')}) -> {outp.decode('utf-8')}")
+
 
 class Cache:
     """Cache class for redis operations."""
