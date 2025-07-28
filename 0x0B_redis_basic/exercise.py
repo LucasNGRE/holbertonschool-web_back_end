@@ -4,7 +4,19 @@
 import redis # pyright: ignore[reportMissingImports]
 import uuid
 from typing import Union, Callable, Optional
+from functools import wraps
 
+
+def count_calls(method: Callable) -> Callable:
+    """Decorator to count the number of calls to a method."""
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        """Wrapper function to count calls."""
+        key = method.__qualname__
+        self._redis.incr(key)
+        return method(self, *args, **kwargs)
+    return wrapper
+    
 
 class Cache:
     """Cache class for redis operations."""
@@ -13,6 +25,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """Store method that takes a data argument and returns a string."""
         key = str(uuid.uuid4())
