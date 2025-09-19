@@ -3,3 +3,5 @@ package-lock.json
 *-main.js
 *-main.py
 *-main*.js
+redis-6.0.10
+dump.rdb
